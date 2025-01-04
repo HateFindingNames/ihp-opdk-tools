@@ -1,0 +1,25 @@
+# docker run -d --user 1000:1000 \
+# -e DISPLAY=host.docker.internal:0 \
+# -e XAUTHORITY=/headless/.xauthority \
+# -v /home/hunter/opdk/designs:/foss/designs:rw \
+# -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+# -v /tmp/.opdk-tools_xauthority:/headless/.xauthority:rw \
+# --device=/dev/dri:/dev/dri \
+# --name opdk-tools sg13g2-tools:latest
+
+services:
+    opdk-tools:
+        container_name: opdk-tools_xserver_uid_1000
+        image: sg13g2-tools:latest
+        user: 1000:1000
+        environment:
+            - DISPLAY=host.docker.internal:0
+            - XAUTHORITY=/headless/.xauthority
+        volumes:
+            - /home/hunter/opdk/designs:/foss/designs:rw
+            - /home/hunter/opdk/IHP-Open-PDK:/foss/IHP-Open-PDK:ro
+            - /tmp/.X11-unix:/tmp/.X11-unix:rw
+            - /tmp/.opdk-tools_xserver_uid_1000_xauthority:/headless/.xauthority:rw
+        devices:
+            - /dev/dri:/dev/dri
+        restart: unless-stopped
