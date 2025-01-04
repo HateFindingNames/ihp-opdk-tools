@@ -6,7 +6,7 @@ FROM ${BASE_IMAGE} AS base
 ARG CONTAINER_TAG=unknown
 ENV IIC_OSIC_TOOLS_VERSION=${CONTAINER_TAG} \
     DEBIAN_FRONTEND=noninteractive \
-    TZ=Europe/Vienna \
+    TZ=Europe/Berlin \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     TOOLS=/foss/tools \
@@ -34,13 +34,13 @@ RUN --mount=type=bind,source=images/base,target=/images/base \
 #######################################################################
 # Compile magic
 #######################################################################
-FROM basepkg AS magic
-ARG MAGIC_REPO_URL="https://github.com/rtimothyedwards/magic.git"
-ARG MAGIC_REPO_COMMIT="8.3.505"
-ARG MAGIC_NAME="magic"
-COPY images/magic/scripts/install.sh install.sh
-RUN --mount=type=bind,source=images/magic,target=/images/magic \
-    bash /images/magic/scripts/install.sh
+# FROM basepkg AS magic
+# ARG MAGIC_REPO_URL="https://github.com/rtimothyedwards/magic.git"
+# ARG MAGIC_REPO_COMMIT="8.3.505"
+# ARG MAGIC_NAME="magic"
+# COPY images/magic/scripts/install.sh install.sh
+# RUN --mount=type=bind,source=images/magic,target=/images/magic \
+#     bash /images/magic/scripts/install.sh
 
 #######################################################################
 # Compile openvaf
@@ -78,22 +78,22 @@ RUN --mount=type=bind,source=images/open_pdks,target=/images/open_pdks \
 #######################################################################
 # Compile covered 
 #######################################################################
-FROM base AS covered
-ARG COVERED_REPO_URL="https://github.com/hpretl/verilog-covered.git"
-ARG COVERED_REPO_COMMIT="19d30fc942642b14dc24e95331cd4777c8dcbad9"
-ARG COVERED_NAME="covered"
-RUN --mount=type=bind,source=images/covered,target=/images/covered \
-    bash /images/covered/scripts/install.sh
+# FROM base AS covered
+# ARG COVERED_REPO_URL="https://github.com/hpretl/verilog-covered.git"
+# ARG COVERED_REPO_COMMIT="19d30fc942642b14dc24e95331cd4777c8dcbad9"
+# ARG COVERED_NAME="covered"
+# RUN --mount=type=bind,source=images/covered,target=/images/covered \
+#     bash /images/covered/scripts/install.sh
 
 #######################################################################
 # Compile cvc_rv
 #######################################################################
-FROM base AS cvc_rv
-ARG CVC_RV_REPO_URL="https://github.com/d-m-bailey/cvc.git"
-ARG CVC_RV_REPO_COMMIT="v1.1.5"
-ARG CVC_RV_NAME="cvc_rv"
-RUN --mount=type=bind,source=images/cvc_rv,target=/images/cvc_rv \
-    bash /images/cvc_rv/scripts/install.sh
+# FROM base AS cvc_rv
+# ARG CVC_RV_REPO_URL="https://github.com/d-m-bailey/cvc.git"
+# ARG CVC_RV_REPO_COMMIT="v1.1.5"
+# ARG CVC_RV_NAME="cvc_rv"
+# RUN --mount=type=bind,source=images/cvc_rv,target=/images/cvc_rv \
+#     bash /images/cvc_rv/scripts/install.sh
 
 #######################################################################
 # Compile gaw3-xschem
@@ -108,52 +108,52 @@ RUN --mount=type=bind,source=images/gaw3-xschem,target=/images/gaw3-xschem \
 #######################################################################
 # Compile GDS3D
 #######################################################################
-FROM open_pdks AS gds3d
-ARG GDS3D_REPO_URL="https://github.com/trilomix/GDS3D.git"
-ARG GDS3D_REPO_COMMIT="dc6d965225c9f5ed2a6faefb7ea30665429060fe"
-ARG GDS3D_NAME="gds3d"
-RUN --mount=type=bind,source=images/gds3d,target=/images/gds3d \
-    bash /images/gds3d/scripts/install.sh
+# FROM open_pdks AS gds3d
+# ARG GDS3D_REPO_URL="https://github.com/trilomix/GDS3D.git"
+# ARG GDS3D_REPO_COMMIT="dc6d965225c9f5ed2a6faefb7ea30665429060fe"
+# ARG GDS3D_NAME="gds3d"
+# RUN --mount=type=bind,source=images/gds3d,target=/images/gds3d \
+#     bash /images/gds3d/scripts/install.sh
 
 #######################################################################
 # Compile ghdl
 #######################################################################
-FROM base AS ghdl
-ARG GHDL_REPO_URL="https://github.com/ghdl/ghdl.git"
-ARG GHDL_REPO_COMMIT="8b80536b2c0980dd347d648154300659dae88ad3"
-ARG GHDL_NAME="ghdl"
-RUN --mount=type=bind,source=images/ghdl,target=/images/ghdl \
-    bash /images/ghdl/scripts/install.sh
+# FROM base AS ghdl
+# ARG GHDL_REPO_URL="https://github.com/ghdl/ghdl.git"
+# ARG GHDL_REPO_COMMIT="8b80536b2c0980dd347d648154300659dae88ad3"
+# ARG GHDL_NAME="ghdl"
+# RUN --mount=type=bind,source=images/ghdl,target=/images/ghdl \
+#     bash /images/ghdl/scripts/install.sh
 
 #######################################################################
 # Compile gtkwave
 #######################################################################
-FROM base AS gtkwave
-ARG GTKWAVE_REPO_URL="https://github.com/gtkwave/gtkwave.git"
-ARG GTKWAVE_REPO_COMMIT="491f24d7e8619cfc1fcc65704ee5c967d1083c18"
-ARG GTKWAVE_NAME="gtkwave"
-RUN --mount=type=bind,source=images/gtkwave,target=/images/gtkwave \
-    bash /images/gtkwave/scripts/install.sh
+# FROM base AS gtkwave
+# ARG GTKWAVE_REPO_URL="https://github.com/gtkwave/gtkwave.git"
+# ARG GTKWAVE_REPO_COMMIT="491f24d7e8619cfc1fcc65704ee5c967d1083c18"
+# ARG GTKWAVE_NAME="gtkwave"
+# RUN --mount=type=bind,source=images/gtkwave,target=/images/gtkwave \
+#     bash /images/gtkwave/scripts/install.sh
 
 #######################################################################
 # Compile irsim
 #######################################################################
-FROM base AS irsim
-ARG IRSIM_REPO_URL="https://github.com/rtimothyedwards/irsim.git"
-ARG IRSIM_REPO_COMMIT="a7884acc04cd94017779893d381b7e93d8895587"
-ARG IRSIM_NAME="irsim"
-RUN --mount=type=bind,source=images/irsim,target=/images/irsim \
-    bash /images/irsim/scripts/install.sh
+# FROM base AS irsim
+# ARG IRSIM_REPO_URL="https://github.com/rtimothyedwards/irsim.git"
+# ARG IRSIM_REPO_COMMIT="a7884acc04cd94017779893d381b7e93d8895587"
+# ARG IRSIM_NAME="irsim"
+# RUN --mount=type=bind,source=images/irsim,target=/images/irsim \
+#     bash /images/irsim/scripts/install.sh
 
 #######################################################################
 # Compile iverilog
 #######################################################################
-FROM base AS iverilog
-ARG IVERILOG_REPO_URL="https://github.com/steveicarus/iverilog.git"
-ARG IVERILOG_REPO_COMMIT="06077ed026b4d8498d9129a6acfb0b44d0b51f18"
-ARG IVERILOG_NAME="iverilog"
-RUN --mount=type=bind,source=images/iverilog,target=/images/iverilog \
-    bash /images/iverilog/scripts/install.sh
+# FROM base AS iverilog
+# ARG IVERILOG_REPO_URL="https://github.com/steveicarus/iverilog.git"
+# ARG IVERILOG_REPO_COMMIT="06077ed026b4d8498d9129a6acfb0b44d0b51f18"
+# ARG IVERILOG_NAME="iverilog"
+# RUN --mount=type=bind,source=images/iverilog,target=/images/iverilog \
+#     bash /images/iverilog/scripts/install.sh
 
 #######################################################################
 # Compile klayout
@@ -178,12 +178,12 @@ RUN --mount=type=bind,source=images/libman,target=/images/libman \
 #######################################################################
 # Compile netgen
 #######################################################################
-FROM base AS netgen
-ARG NETGEN_REPO_URL="https://github.com/rtimothyedwards/netgen.git"
-ARG NETGEN_REPO_COMMIT="1.5.287"
-ARG NETGEN_NAME="netgen"
-RUN --mount=type=bind,source=images/netgen,target=/images/netgen \
-    bash /images/netgen/scripts/install.sh
+# FROM base AS netgen
+# ARG NETGEN_REPO_URL="https://github.com/rtimothyedwards/netgen.git"
+# ARG NETGEN_REPO_COMMIT="1.5.287"
+# ARG NETGEN_NAME="netgen"
+# RUN --mount=type=bind,source=images/netgen,target=/images/netgen \
+#     bash /images/netgen/scripts/install.sh
 
 #######################################################################
 # Compile ngspice
@@ -198,50 +198,50 @@ RUN --mount=type=bind,source=images/ngspice,target=/images/ngspice \
 #######################################################################
 # Compile ngspyce
 #######################################################################
-FROM basepkg AS ngspyce
-ARG NGSPYCE_REPO_URL="https://github.com/ignamv/ngspyce.git"
-ARG NGSPYCE_REPO_COMMIT="154a2724080e3bf15827549bba9f315cd11984fe"
-ARG NGSPYCE_NAME="ngspyce"
-RUN --mount=type=bind,source=images/ngspyce,target=/images/ngspyce \
-    bash /images/ngspyce/scripts/install.sh
+# FROM basepkg AS ngspyce
+# ARG NGSPYCE_REPO_URL="https://github.com/ignamv/ngspyce.git"
+# ARG NGSPYCE_REPO_COMMIT="154a2724080e3bf15827549bba9f315cd11984fe"
+# ARG NGSPYCE_NAME="ngspyce"
+# RUN --mount=type=bind,source=images/ngspyce,target=/images/ngspyce \
+#     bash /images/ngspyce/scripts/install.sh
 
 #######################################################################
 # Compile nvc (VHDL simulator)
 #######################################################################
-FROM base AS nvc
-ARG NVC_REPO_URL="https://github.com/nickg/nvc.git"
-ARG NVC_REPO_COMMIT="r1.14.2"
-ARG NVC_NAME="nvc"
-RUN --mount=type=bind,source=images/nvc,target=/images/nvc \
-    bash /images/nvc/scripts/install.sh
+# FROM base AS nvc
+# ARG NVC_REPO_URL="https://github.com/nickg/nvc.git"
+# ARG NVC_REPO_COMMIT="r1.14.2"
+# ARG NVC_NAME="nvc"
+# RUN --mount=type=bind,source=images/nvc,target=/images/nvc \
+#     bash /images/nvc/scripts/install.sh
 
 #######################################################################
 # Compile openroad
 #######################################################################
-FROM base AS openroad_app
-ARG OPENROAD_APP_REPO_URL="https://github.com/The-OpenROAD-Project/OpenROAD.git"
-ARG OPENROAD_APP_REPO_COMMIT="edf00dff99f6c40d67a30c0e22a8191c5d2ed9d6"
-ARG OPENROAD_APP_NAME="openroad"
-RUN --mount=type=bind,source=images/openroad,target=/images/openroad \
-    bash /images/openroad/scripts/install.sh
+# FROM base AS openroad_app
+# ARG OPENROAD_APP_REPO_URL="https://github.com/The-OpenROAD-Project/OpenROAD.git"
+# ARG OPENROAD_APP_REPO_COMMIT="edf00dff99f6c40d67a30c0e22a8191c5d2ed9d6"
+# ARG OPENROAD_APP_NAME="openroad"
+# RUN --mount=type=bind,source=images/openroad,target=/images/openroad \
+#     bash /images/openroad/scripts/install.sh
 
 #######################################################################
 # Compile padring
 #######################################################################
-FROM base AS padring
-ARG PADRING_REPO_URL="https://github.com/donn/padring.git"
-ARG PADRING_REPO_COMMIT="b2a64abcc8561d758c0bcb3945117dcb13bd9dca"
-ARG PADRING_NAME="padring"
-RUN --mount=type=bind,source=images/padring,target=/images/padring \
-    bash /images/padring/scripts/install.sh
+# FROM base AS padring
+# ARG PADRING_REPO_URL="https://github.com/donn/padring.git"
+# ARG PADRING_REPO_COMMIT="b2a64abcc8561d758c0bcb3945117dcb13bd9dca"
+# ARG PADRING_NAME="padring"
+# RUN --mount=type=bind,source=images/padring,target=/images/padring \
+#     bash /images/padring/scripts/install.sh
 
 #######################################################################
 # Compile pulp platform tools
 #######################################################################
-FROM base AS pulp-tools
-ARG PULP_NAME="pulp"
-RUN --mount=type=bind,source=images/pulp-tools,target=/images/pulp-tools \
-    bash /images/pulp-tools/scripts/install.sh
+# FROM base AS pulp-tools
+# ARG PULP_NAME="pulp"
+# RUN --mount=type=bind,source=images/pulp-tools,target=/images/pulp-tools \
+#     bash /images/pulp-tools/scripts/install.sh
 
 #######################################################################
 # Compile pyopus
@@ -256,22 +256,22 @@ RUN --mount=type=bind,source=images/pulp-tools,target=/images/pulp-tools \
 #######################################################################
 # Compile surelog
 #######################################################################
-FROM base AS surelog
-ARG SURELOG_REPO_URL="https://github.com/chipsalliance/Surelog.git"
-ARG SURELOG_REPO_COMMIT="v1.84"
-ARG SURELOG_NAME="surelog"
-RUN --mount=type=bind,source=images/surelog,target=/images/surelog \
-    bash /images/surelog/scripts/install.sh
+# FROM base AS surelog
+# ARG SURELOG_REPO_URL="https://github.com/chipsalliance/Surelog.git"
+# ARG SURELOG_REPO_COMMIT="v1.84"
+# ARG SURELOG_NAME="surelog"
+# RUN --mount=type=bind,source=images/surelog,target=/images/surelog \
+#     bash /images/surelog/scripts/install.sh
 
 #######################################################################
 # Compile qflow helper files
 #######################################################################
-FROM base AS qflow
-ARG QFLOW_REPO_URL="https://github.com/RTimothyEdwards/qflow.git"
-ARG QFLOW_REPO_COMMIT="52ecda1053bcbd2f6ec88b8379c8179e2a849f7a"
-ARG QFLOW_NAME="qflow"
-RUN --mount=type=bind,source=images/qflow,target=/images/qflow \
-    bash /images/qflow/scripts/install.sh
+# FROM base AS qflow
+# ARG QFLOW_REPO_URL="https://github.com/RTimothyEdwards/qflow.git"
+# ARG QFLOW_REPO_COMMIT="52ecda1053bcbd2f6ec88b8379c8179e2a849f7a"
+# ARG QFLOW_NAME="qflow"
+# RUN --mount=type=bind,source=images/qflow,target=/images/qflow \
+#     bash /images/qflow/scripts/install.sh
 
 #######################################################################
 # Compile qucs-s
@@ -286,63 +286,63 @@ RUN --mount=type=bind,source=images/qucs-s,target=/images/qucs-s \
 #######################################################################
 # Compile riscv-gnu-toolchain
 #######################################################################
-FROM base AS riscv-gnu-toolchain
-ARG RISCV_GNU_TOOLCHAIN_REPO_URL="https://github.com/riscv-collab/riscv-gnu-toolchain.git"
-ARG RISCV_GNU_TOOLCHAIN_REPO_COMMIT="2024.11.22"
-ARG RISCV_GNU_TOOLCHAIN_NAME="riscv-gnu-toolchain"
-RUN --mount=type=bind,source=images/riscv-gnu-toolchain,target=/images/riscv-gnu-toolchain \
-    bash /images/riscv-gnu-toolchain/scripts/install.sh
-ENV RISCV=$TOOLS/$RISCV_GNU_TOOLCHAIN_NAME
+# FROM base AS riscv-gnu-toolchain
+# ARG RISCV_GNU_TOOLCHAIN_REPO_URL="https://github.com/riscv-collab/riscv-gnu-toolchain.git"
+# ARG RISCV_GNU_TOOLCHAIN_REPO_COMMIT="2024.11.22"
+# ARG RISCV_GNU_TOOLCHAIN_NAME="riscv-gnu-toolchain"
+# RUN --mount=type=bind,source=images/riscv-gnu-toolchain,target=/images/riscv-gnu-toolchain \
+#     bash /images/riscv-gnu-toolchain/scripts/install.sh
+# ENV RISCV=$TOOLS/$RISCV_GNU_TOOLCHAIN_NAME
 
 #######################################################################
 # Compile riscv-pk (RISCV proxy kernel and boot loader)
 #######################################################################
-FROM riscv-gnu-toolchain AS riscv-pk
-ARG RISCV_PK_REPO_URL="https://github.com/riscv-software-src/riscv-pk.git"
-ARG RISCV_PK_REPO_COMMIT="abadfdc507d5a75b6272dc360e70a80a510c758a"
-ARG RISCV_PK_NAME="riscv-pk"
-RUN --mount=type=bind,source=images/riscv-pk,target=/images/riscv-pk \
-    bash /images/riscv-pk/scripts/install.sh
+# FROM riscv-gnu-toolchain AS riscv-pk
+# ARG RISCV_PK_REPO_URL="https://github.com/riscv-software-src/riscv-pk.git"
+# ARG RISCV_PK_REPO_COMMIT="abadfdc507d5a75b6272dc360e70a80a510c758a"
+# ARG RISCV_PK_NAME="riscv-pk"
+# RUN --mount=type=bind,source=images/riscv-pk,target=/images/riscv-pk \
+#     bash /images/riscv-pk/scripts/install.sh
 
 #######################################################################
 # Compile slang
 #######################################################################
-FROM base AS slang
-ARG SLANG_REPO_URL="https://github.com/MikePopoloski/slang.git"
-ARG SLANG_REPO_COMMIT="f384536e1d7feb52538231c426de82a28fd14174"
-ARG SLANG_NAME="slang"
-RUN --mount=type=bind,source=images/slang,target=/images/slang \
-    bash /images/slang/scripts/install.sh
+# FROM base AS slang
+# ARG SLANG_REPO_URL="https://github.com/MikePopoloski/slang.git"
+# ARG SLANG_REPO_COMMIT="f384536e1d7feb52538231c426de82a28fd14174"
+# ARG SLANG_NAME="slang"
+# RUN --mount=type=bind,source=images/slang,target=/images/slang \
+#     bash /images/slang/scripts/install.sh
 
 #######################################################################
 # Compile spike (RISCV ISA simulator)
 #######################################################################
-FROM riscv-gnu-toolchain AS spike
-ARG SPIKE_REPO_URL="https://github.com/riscv-software-src/riscv-isa-sim.git"
-ARG SPIKE_REPO_COMMIT="a2dcf1fd70f359e2cf0a953986c9fe222a6d53c2"
-ARG SPIKE_NAME="spike"
-RUN --mount=type=bind,source=images/spike,target=/images/spike \
-    bash /images/spike/scripts/install.sh
+# FROM riscv-gnu-toolchain AS spike
+# ARG SPIKE_REPO_URL="https://github.com/riscv-software-src/riscv-isa-sim.git"
+# ARG SPIKE_REPO_COMMIT="a2dcf1fd70f359e2cf0a953986c9fe222a6d53c2"
+# ARG SPIKE_NAME="spike"
+# RUN --mount=type=bind,source=images/spike,target=/images/spike \
+#     bash /images/spike/scripts/install.sh
 
 #######################################################################
 # Compile verilator
 #######################################################################
-FROM base AS verilator
-ARG VERILATOR_REPO_URL="https://github.com/verilator/verilator.git"
-ARG VERILATOR_REPO_COMMIT="v5.030"
-ARG VERILATOR_NAME="verilator"
-RUN --mount=type=bind,source=images/verilator,target=/images/verilator \
-    bash /images/verilator/scripts/install.sh
+# FROM base AS verilator
+# ARG VERILATOR_REPO_URL="https://github.com/verilator/verilator.git"
+# ARG VERILATOR_REPO_COMMIT="v5.030"
+# ARG VERILATOR_NAME="verilator"
+# RUN --mount=type=bind,source=images/verilator,target=/images/verilator \
+#     bash /images/verilator/scripts/install.sh
 
 #######################################################################
 # Compile xcircuit
 #######################################################################
-FROM base AS xcircuit
-ARG XCIRCUIT_REPO_URL="https://github.com/RTimothyEdwards/XCircuit.git"
-ARG XCIRCUIT_REPO_COMMIT="b6d0b096a6a4730a4255efb50191e03cfa9b5496"
-ARG XCIRCUIT_NAME="xcircuit"
-RUN --mount=type=bind,source=images/xcircuit,target=/images/xcircuit \
-    bash /images/xcircuit/scripts/install.sh
+# FROM base AS xcircuit
+# ARG XCIRCUIT_REPO_URL="https://github.com/RTimothyEdwards/XCircuit.git"
+# ARG XCIRCUIT_REPO_COMMIT="b6d0b096a6a4730a4255efb50191e03cfa9b5496"
+# ARG XCIRCUIT_NAME="xcircuit"
+# RUN --mount=type=bind,source=images/xcircuit,target=/images/xcircuit \
+#     bash /images/xcircuit/scripts/install.sh
 
 #######################################################################
 # Compile xschem
@@ -377,35 +377,35 @@ RUN --mount=type=bind,source=images/xyce-xdm,target=/images/xyce-xdm \
 #######################################################################
 # Compile yosys & ghdl plugin & slang plugin
 #######################################################################
-FROM base AS yosys
-ARG YOSYS_REPO_URL="https://github.com/YosysHQ/yosys.git"
-ARG YOSYS_REPO_COMMIT="v0.48"
-ARG YOSYS_NAME="yosys"
-ARG YOSYS_EQY_REPO_URL="https://github.com/YosysHQ/eqy.git"
-ARG YOSYS_EQY_NAME="yosys_eqy"
-ARG YOSYS_SBY_REPO_URL="https://github.com/YosysHQ/sby.git"
-ARG YOSYS_SBY_NAME="yosys_sby"
-ARG YOSYS_MCY_REPO_URL="https://github.com/YosysHQ/mcy.git"
-ARG YOSYS_MCY_NAME="yosys_mcy"
-RUN --mount=type=bind,source=images/yosys,target=/images/yosys \
-    bash /images/yosys/scripts/install.sh
+# FROM base AS yosys
+# ARG YOSYS_REPO_URL="https://github.com/YosysHQ/yosys.git"
+# ARG YOSYS_REPO_COMMIT="v0.48"
+# ARG YOSYS_NAME="yosys"
+# ARG YOSYS_EQY_REPO_URL="https://github.com/YosysHQ/eqy.git"
+# ARG YOSYS_EQY_NAME="yosys_eqy"
+# ARG YOSYS_SBY_REPO_URL="https://github.com/YosysHQ/sby.git"
+# ARG YOSYS_SBY_NAME="yosys_sby"
+# ARG YOSYS_MCY_REPO_URL="https://github.com/YosysHQ/mcy.git"
+# ARG YOSYS_MCY_NAME="yosys_mcy"
+# RUN --mount=type=bind,source=images/yosys,target=/images/yosys \
+#     bash /images/yosys/scripts/install.sh
 
-FROM base AS ghdl-yosys-plugin
-ARG GHDL_YOSYS_PLUGIN_REPO_URL="https://github.com/ghdl/ghdl-yosys-plugin.git"
-ARG GHDL_YOSYS_PLUGIN_REPO_COMMIT="511412f984d64ed7c46c4bdbd839f4b3c48f6fa5"
-ARG GHDL_YOSYS_PLUGIN_NAME="ghdl-yosys-plugin"
-COPY --from=yosys	${TOOLS}    ${TOOLS}
-COPY --from=ghdl	${TOOLS}    ${TOOLS}
-RUN --mount=type=bind,source=images/ghdl-yosys-plugin,target=/images/ghdl-yosys-plugin \
-    bash /images/ghdl-yosys-plugin/scripts/install.sh
+# FROM base AS ghdl-yosys-plugin
+# ARG GHDL_YOSYS_PLUGIN_REPO_URL="https://github.com/ghdl/ghdl-yosys-plugin.git"
+# ARG GHDL_YOSYS_PLUGIN_REPO_COMMIT="511412f984d64ed7c46c4bdbd839f4b3c48f6fa5"
+# ARG GHDL_YOSYS_PLUGIN_NAME="ghdl-yosys-plugin"
+# COPY --from=yosys	${TOOLS}    ${TOOLS}
+# COPY --from=ghdl	${TOOLS}    ${TOOLS}
+# RUN --mount=type=bind,source=images/ghdl-yosys-plugin,target=/images/ghdl-yosys-plugin \
+#     bash /images/ghdl-yosys-plugin/scripts/install.sh
 
-FROM base AS slang-yosys-plugin
-ARG SLANG_YOSYS_PLUGIN_REPO_URL="https://github.com/povik/yosys-slang.git"
-ARG SLANG_YOSYS_PLUGIN_REPO_COMMIT="8b1577b665a241da9034d340779fcb834d62c63f"
-ARG SLANG_YOSYS_PLUGIN_NAME="slang-yosys-plugin"
-COPY --from=yosys	${TOOLS}    ${TOOLS}
-RUN --mount=type=bind,source=images/slang-yosys-plugin,target=/images/slang-yosys-plugin \
-    bash /images/slang-yosys-plugin/scripts/install.sh
+# FROM base AS slang-yosys-plugin
+# ARG SLANG_YOSYS_PLUGIN_REPO_URL="https://github.com/povik/yosys-slang.git"
+# ARG SLANG_YOSYS_PLUGIN_REPO_COMMIT="8b1577b665a241da9034d340779fcb834d62c63f"
+# ARG SLANG_YOSYS_PLUGIN_NAME="slang-yosys-plugin"
+# COPY --from=yosys	${TOOLS}    ${TOOLS}
+# RUN --mount=type=bind,source=images/slang-yosys-plugin,target=/images/slang-yosys-plugin \
+#     bash /images/slang-yosys-plugin/scripts/install.sh
 
 #######################################################################
 # Compile different components for the rftoolkit
@@ -446,44 +446,44 @@ ENV OMPI_MCA_btl_vader_single_copy_mechanism=none
 
 # Copy all layers into the final container
 COPY --from=open_pdks                    ${PDK_ROOT}/           ${PDK_ROOT}/
-COPY --from=covered                      ${TOOLS}/              ${TOOLS}/
-COPY --from=cvc_rv                       ${TOOLS}/              ${TOOLS}/
+# COPY --from=covered                      ${TOOLS}/              ${TOOLS}/
+# COPY --from=cvc_rv                       ${TOOLS}/              ${TOOLS}/
 COPY --from=gaw3-xschem                  ${TOOLS}/              ${TOOLS}/
-COPY --from=gds3d                        ${TOOLS}/              ${TOOLS}/
-COPY --from=gds3d                        ${PDK_ROOT}/           ${PDK_ROOT}/
-COPY --from=ghdl                         ${TOOLS}/              ${TOOLS}/
-COPY --from=gtkwave                      ${TOOLS}/              ${TOOLS}/
-COPY --from=irsim                        ${TOOLS}/              ${TOOLS}/
-COPY --from=iverilog                     ${TOOLS}/              ${TOOLS}/
+# COPY --from=gds3d                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=gds3d                        ${PDK_ROOT}/           ${PDK_ROOT}/
+# COPY --from=ghdl                         ${TOOLS}/              ${TOOLS}/
+# COPY --from=gtkwave                      ${TOOLS}/              ${TOOLS}/
+# COPY --from=irsim                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=iverilog                     ${TOOLS}/              ${TOOLS}/
 COPY --from=klayout                      ${TOOLS}/              ${TOOLS}/
 COPY --from=libman                       ${TOOLS}/              ${TOOLS}/
-COPY --from=magic                        ${TOOLS}/              ${TOOLS}/
-COPY --from=netgen                       ${TOOLS}/              ${TOOLS}/
-COPY --from=nvc                          ${TOOLS}/              ${TOOLS}/
+# COPY --from=magic                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=netgen                       ${TOOLS}/              ${TOOLS}/
+# COPY --from=nvc                          ${TOOLS}/              ${TOOLS}/
 COPY --from=ngspice                      ${TOOLS}/              ${TOOLS}/
-COPY --from=ngspyce                      ${TOOLS}/              ${TOOLS}/
-COPY --from=openroad_app                 ${TOOLS}/              ${TOOLS}/
+# COPY --from=ngspyce                      ${TOOLS}/              ${TOOLS}/
+# COPY --from=openroad_app                 ${TOOLS}/              ${TOOLS}/
 COPY --from=osic-multitool               ${TOOLS}/              ${TOOLS}/
 COPY --from=openvaf                      ${TOOLS}/              ${TOOLS}/
-COPY --from=padring                      ${TOOLS}/              ${TOOLS}/
-COPY --from=pulp-tools                   ${TOOLS}/              ${TOOLS}/
+# COPY --from=padring                      ${TOOLS}/              ${TOOLS}/
+# COPY --from=pulp-tools                   ${TOOLS}/              ${TOOLS}/
 #COPY --from=pyopus                       ${TOOLS}/              ${TOOLS}/
-COPY --from=qflow                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=qflow                        ${TOOLS}/              ${TOOLS}/
 COPY --from=qucs-s                       ${TOOLS}/              ${TOOLS}/
 COPY --from=rftoolkit                    ${TOOLS}/              ${TOOLS}/
-COPY --from=riscv-gnu-toolchain          ${TOOLS}/              ${TOOLS}/
-COPY --from=riscv-pk                     ${TOOLS}/              ${TOOLS}/
-COPY --from=slang                        ${TOOLS}/              ${TOOLS}/
-COPY --from=spike                        ${TOOLS}/              ${TOOLS}/
-COPY --from=surelog                      ${TOOLS}/              ${TOOLS}/
-COPY --from=verilator                    ${TOOLS}/              ${TOOLS}/
-COPY --from=xcircuit                     ${TOOLS}/              ${TOOLS}/
+# COPY --from=riscv-gnu-toolchain          ${TOOLS}/              ${TOOLS}/
+# COPY --from=riscv-pk                     ${TOOLS}/              ${TOOLS}/
+# COPY --from=slang                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=spike                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=surelog                      ${TOOLS}/              ${TOOLS}/
+# COPY --from=verilator                    ${TOOLS}/              ${TOOLS}/
+# COPY --from=xcircuit                     ${TOOLS}/              ${TOOLS}/
 COPY --from=xschem                       ${TOOLS}/              ${TOOLS}/
 COPY --from=xyce                         ${TOOLS}/              ${TOOLS}/
 COPY --from=xyce-xdm                     ${TOOLS}/              ${TOOLS}/
-COPY --from=yosys                        ${TOOLS}/              ${TOOLS}/
-COPY --from=ghdl-yosys-plugin            ${TOOLS}_add/          ${TOOLS}/
-COPY --from=slang-yosys-plugin           ${TOOLS}_add/          ${TOOLS}/
+# COPY --from=yosys                        ${TOOLS}/              ${TOOLS}/
+# COPY --from=ghdl-yosys-plugin            ${TOOLS}_add/          ${TOOLS}/
+# COPY --from=slang-yosys-plugin           ${TOOLS}_add/          ${TOOLS}/
 
 # Copy skeleton and tool version file
 COPY images/iic-osic-tools/skel /
@@ -500,6 +500,7 @@ RUN $STARTUPDIR/scripts/install.sh
 #    git clone --depth=1 https://github.com/iic-jku/SKY130_PLL1.git ${EXAMPLES}/SKY130_PLL1 && \
 #    git clone --depth=1 https://github.com/mabrains/Analog_blocks.git ${EXAMPLES}/SKY130_ANALOG-BLOCKS
 RUN git clone --depth=1 https://github.com/mole99/ota-5t.git ${EXAMPLES}/cace/ota-5t
+RUN git clone --depth=1 https://github.com/KrzysztofHerman/IHP-Open-DesignLib.git ${EXAMPLES}/CoreExperts
 
 # Finalize setup/install
 RUN $STARTUPDIR/scripts/post_install.sh
